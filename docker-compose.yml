@@ -1,0 +1,42 @@
+services:
+    web:
+        image: nginx:latest
+        container_name: barber-api-nginx
+        restart: always
+        ports:
+            - "80:80"
+            - "443:443"
+        volumes:
+            - .:/www
+            - ./nginx/site.conf:/etc/nginx/conf.d/site.conf
+            - ./nginx/log:/var/log/nginx
+        networks:
+            - api-network
+    php:
+        build: docker/
+        container_name: barber-api-php
+        restart: always
+        volumes:
+            - .:/www
+        networks:
+            - api-network
+        pull_policy: build
+    db:
+        container_name: barber-api-db
+        image: postgres
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: barber-api
+            POSTGRES_PASSWORD: barber-api
+            POSTGRES_DB: barber-api
+        ports:
+            - 5432:5432
+        volumes:
+            - ./pgsql-data:/var/lib/postgresql/data
+        networks:
+            - api-network
+volumes:
+    pgsql-data:
+networks:
+    api-network:
+        driver: bridge
