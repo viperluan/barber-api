@@ -40,3 +40,4 @@ volumes:
 networks:
     barber-api-network:
         driver: bridge
+        name: barber-api-network
