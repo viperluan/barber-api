@@ -10,4 +10,13 @@ RUN apt-get update \
 
 RUN docker-php-ext-install -j$(nproc) zip pdo_pgsql
 
+ENV USER=barber-api
+ENV UID=1000
+
+RUN useradd -G www-data,root -u $UID -d /home/$USER $USER
+RUN mkdir -p /home/$USER/.composer && \
+    chown -R $USER:$USER /home/$USER
+
+USER $USER
+
 WORKDIR /www
