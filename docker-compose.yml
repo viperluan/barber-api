@@ -11,7 +11,7 @@ services:
             - ./nginx/site.conf:/etc/nginx/conf.d/site.conf
             - ./nginx/log:/var/log/nginx
         networks:
-            - api-network
+            - barber-api-network
     php:
         build: docker/
         container_name: barber-api-php
@@ -19,7 +19,7 @@ services:
         volumes:
             - .:/www
         networks:
-            - api-network
+            - barber-api-network
         pull_policy: build
     db:
         container_name: barber-api-db
@@ -34,9 +34,9 @@ services:
         volumes:
             - ./pgsql-data:/var/lib/postgresql/data
         networks:
-            - api-network
+            - barber-api-network
 volumes:
     pgsql-data:
 networks:
-    api-network:
+    barber-api-network:
         driver: bridge
