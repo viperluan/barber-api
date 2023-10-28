@@ -8,7 +8,7 @@ RUN apt-get update \
     && apt-get install -y libpq-dev libfreetype-dev libjpeg62-turbo-dev libpng-dev libzip-dev unzip \
     && apt-get upgrade -y
 
-RUN docker-php-ext-install -j$(nproc) zip pdo_pgsql
+RUN docker-php-ext-install -j$(nproc) zip pdo_mysql
 
 ENV USER=barber-api
 ENV UID=1000

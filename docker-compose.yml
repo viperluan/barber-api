@@ -23,20 +23,19 @@ services:
         pull_policy: build
     db:
         container_name: barber-api-db
-        image: postgres
+        image: mysql
         restart: unless-stopped
         environment:
-            POSTGRES_USER: barber-api
-            POSTGRES_PASSWORD: barber-api
-            POSTGRES_DB: barber-api
+            MYSQL_ROOT_PASSWORD: barber-api
+            MYSQL_DATABASE: barber-api
         ports:
-            - 5432:5432
+            - 3306:3306
         volumes:
-            - ./pgsql-data:/var/lib/postgresql/data
+            - ./mysql-data:/var/lib/mysql
         networks:
             - barber-api-network
 volumes:
-    pgsql-data:
+    mysql-data:
 networks:
     barber-api-network:
         driver: bridge
